@@ -20,8 +20,10 @@ without the session that built it. Git is the transport: `reports/` is mine,
 3. **Do the `→` cross-references link to the term the authors meant?** They were
    resolved by longest-match against the term index. A wrong link silently
    rewrites a definition's meaning.
-4. **Do the formula-register pages match their scans?** Each formula shows the
-   MathPix LaTeX above the printed original. They should agree.
+4. **Are the formula readings right?** 662 numbered equations across the four
+   volumes, as LaTeX. The scans are no longer in the wiki (they flooded llmwiki's
+   Recent view), so each formula carries its unit id — the crop is in the drill
+   folder under that name if you need to compare.
 
 ## What is already verified, so you need not re-derive it
 
@@ -29,11 +31,11 @@ without the session that built it. Git is the transport: `reports/` is mine,
 
 | check | result |
 |---|---|
-| Markdown pages | 236 |
-| maths expressions compiling under KaTeX | 359 / 359 |
+| Markdown pages | 568 |
+| maths expressions compiling under KaTeX | 4063 / 4063 |
 | broken links or images | 0 |
 | unreferenced pages | 0 |
-| scan crops | 261 |
+| volumes represented | 4 |
 
 **These are structural checks. They say nothing about whether a translation is
 right** — that is what this review is for.

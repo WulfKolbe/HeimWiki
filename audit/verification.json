@@ -1,17 +1,18 @@
 {
   "generated_by": "build/verify.py",
   "wiki": {
-    "markdown_pages": 236,
+    "markdown_pages": 568,
     "pages_by_section": {
       "root": 2,
       "sources": 4,
       "concepts": 192,
-      "register": 38
+      "register": 314,
+      "passages": 56
     },
-    "crops": 261
+    "crops": 0
   },
   "math": {
-    "expressions": 359,
+    "expressions": 4063,
     "failed": 0,
     "exit_code": 0
   },
@@ -22,7 +23,7 @@
   "built_artifact": {
     "path": "HeimWiki.html",
     "exists": true,
-    "bytes": 11564973
+    "bytes": 4583538
   },
   "not_published": {
     "raw/": "verbatim third-party source extractions (copyrighted); gitignored",

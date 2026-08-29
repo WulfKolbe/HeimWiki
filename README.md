@@ -12,16 +12,27 @@ work carries a *Begriffsregister* — the authors' index of terms — and a
 *Formelregister*. Those two registers are this wiki. Nothing here is a summary
 written for it, and no one has written up the argument of the volumes.
 
-- **192 concept pages** (189 bilingual) — the Begriffsregister, pages 80–99.
-  English body, German original beneath it. The `→` cross-references of the
-  printed register are live links; each page also lists what refers back to it.
-- **38 formula-register pages** — 261 formulas from pages 100–137, each with the
-  scan it was read from.
+All four volumes are in it:
+
+- **192 concept pages** (189 bilingual) — the Begriffsregister of volume 3,
+  pages 80–99. English body, German original beneath it. The `→`
+  cross-references of the printed register are live links; each page also lists
+  what refers back to it.
+- **314 formula pages** — every *numbered* equation in all four volumes, 662 in
+  total (vol. 1: 140, vol. 2: 182, vol. 3: 286, vol. 4: 54), as LaTeX, one page
+  per printed page.
+- **56 cited passages** — the pages of volume 2 that the Begriffsregister itself
+  cites, bilingual, so `(2, 21)` resolves to the text it names.
 - **4 source pages** — one per volume, with its extraction figures.
 
-Roughly 1,500 translated prose units and 13,454 formulas across the four volumes
-are drilled and searchable but **not** written up. `wiki/overview.md` says so on
-the page rather than leaving it to be inferred.
+568 pages in all. The *argument* of the volumes is still not written up: their
+prose is drilled, translated and searchable, but only the material above is in
+the wiki. `wiki/overview.md` says so on the page.
+
+**No scan images.** Every equation here is LaTeX. The crops were indexed as
+separate documents and flooded llmwiki's Recent view with jpgs whose paths
+resolved to no wiki page; each formula now carries its unit id instead, which
+locates the scan in the drill folder.
 
 ## Provenance
 
@@ -65,8 +76,8 @@ report the whole repository as MIT, which would be wrong about the content.
 
 **The content reproduces a published reference work.** The concept pages carry
 Heim and Dröscher's register definitions in full, in translation, and the
-register pages carry 261 scans of their printed formulas. That is a reproduction
-of the substance of a copyrighted book, not an excerpt from it. The verbatim
+formula pages carry 662 of their printed equations. That is a reproduction of
+the substance of a copyrighted book, not an excerpt from it. The verbatim
 full-text extractions are excluded from this repository (`raw/`, gitignored),
 but that does not change what the register pages are. Anyone reusing this
 material is responsible for their own rights position.

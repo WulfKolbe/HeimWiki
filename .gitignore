@@ -5,3 +5,6 @@ raw/
 build/tw/
 build/__pycache__/
 build/register.json
+
+# llmwiki workspace index — derived, rebuilt by `llmwiki init` / `reindex`
+.llmwiki/

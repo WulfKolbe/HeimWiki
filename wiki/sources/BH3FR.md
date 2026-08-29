@@ -6,14 +6,12 @@ bibkey: BH3FR
 volume: 3
 lang: EN-US
 lang_source: de
-last_updated: 2026-08-27
+last_updated: 2026-08-29
 ---
 
 # Introduction, with index of terms and formulas
 
-**German title:** *Einführung in Burkhard Heim: Elementarstrukturen der Materie, mit Begriffs- und Formelregister*
-
-Drilled with `pdfdrill` (bibkey `BH3FR`) and translated to English with DeepL; the German original is retained on every translated unit.
+Volume 3. Drilled with `pdfdrill` (bibkey `BH3FR`) and translated to English with DeepL; the German original is kept on every translated unit.
 
 ## Extraction
 
@@ -25,13 +23,15 @@ Drilled with `pdfdrill` (bibkey `BH3FR`) and translated to English with DeepL; t
 | inline formulas | 217 |
 | units carrying both languages | 122 |
 
-## Registers
+## In this wiki
 
-This volume carries the author's own **Begriffsregister** (pages 80–99, 192 terms — one concept page each) and **Formelregister** (pages 100–137, 261 formulas across 38 pages).
+- **Formulas** — 44 pages, 286 numbered equations, each with its scan: [p100](../register/BH3FR/p100.md), [p101](../register/BH3FR/p101.md), [p102](../register/BH3FR/p102.md), [p103](../register/BH3FR/p103.md), [p104](../register/BH3FR/p104.md), [p105](../register/BH3FR/p105.md), [p106](../register/BH3FR/p106.md), [p107](../register/BH3FR/p107.md), [p108](../register/BH3FR/p108.md), [p109](../register/BH3FR/p109.md), …
+- **Concepts** — the Begriffsregister, one page per term; see [the index](../index.md).
 
-- [Index of terms](../index.md)
-- Formula register: [p100](../register/p100.md), [p101](../register/p101.md), [p102](../register/p102.md), [p103](../register/p103.md), [p104](../register/p104.md), [p105](../register/p105.md), [p106](../register/p106.md), [p107](../register/p107.md), [p108](../register/p108.md), [p109](../register/p109.md), [p110](../register/p110.md), [p111](../register/p111.md), …
+## What is not here
+
+The argument of this volume is not written up. Its prose is drilled, translated and searchable, but only the pages listed above are in the wiki.
 
 ## Translation integrity
 
-The translation touched prose only. Formula and Equation objects carry the author's LaTeX unchanged — no `latex_source` twin exists on any of them. Inline math *embedded in translated prose* was normalised by the translator and is not byte-identical to the German; cite formulas from the register or the German original, never from translated prose.
+The translation touched prose only — Formula and Equation objects carry the author's LaTeX unchanged. Inline maths *inside translated prose* was normalised by the translator and is not byte-identical to the German; cite formulas from the formula pages or the German original, never from translated prose.
