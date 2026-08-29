@@ -19,6 +19,7 @@ json.dump(info, open(p, "w"), indent=4)
 PY
 fi
 
+python3 "$ROOT/build/gen_index.py"          # wiki/index.md is derived
 python3 "$ROOT/build/make_tiddlers.py"
 "$BIN" "$TW" --build index
 cp "$TW/output/index.html" "$ROOT/HeimWiki.html"
