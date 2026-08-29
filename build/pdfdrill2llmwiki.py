@@ -104,10 +104,23 @@ def resolve(text, by, page_of, bad, depth):
     return MARKER.sub(repl, text or ""), used
 
 
+WRITES = {"written": 0, "unchanged": 0}
+
+
 def write(path, front, body):
+    """Only touch a file whose content actually changed.
+
+    llmwiki's watcher re-ingests on mtime, so rewriting every page on every run
+    makes a no-op re-projection look like a full re-import. Comparing content
+    first turns a re-run into zero filesystem events."""
     path.parent.mkdir(parents=True, exist_ok=True)
     fm = ["---"] + [f"{k}: {v}" for k, v in front.items() if v not in (None, "")] + ["---", ""]
-    path.write_text("\n".join(fm) + "\n".join(body).rstrip() + "\n", encoding="utf-8")
+    new = "\n".join(fm) + "\n".join(body).rstrip() + "\n"
+    if path.exists() and path.read_text(encoding="utf-8") == new:
+        WRITES["unchanged"] += 1
+        return
+    path.write_text(new, encoding="utf-8")
+    WRITES["written"] += 1
 
 
 def main():
@@ -246,7 +259,8 @@ def main():
            "bibkey": bibkey}, body)
 
     print(f"{bibkey}: {n_pages} document pages, {n_elem} element pages, {n_ref} references"
-          f"  ({len(bad)} formula readings KaTeX refuses, shown as text)")
+          f"  ({len(bad)} formula readings KaTeX refuses, shown as text)"
+          f"  [{WRITES['written']} files written, {WRITES['unchanged']} unchanged]")
     return dict(bibkey=bibkey, pages=n_pages, elements=n_elem, references=n_ref)
 
 
