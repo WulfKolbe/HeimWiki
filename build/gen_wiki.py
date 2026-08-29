@@ -121,7 +121,9 @@ def main():
         e["slug"] = s
     idx = build_index(entries)
 
-    for d in ("concepts", "sources", "register", "crops"):
+    # only the directories this generator actually fills; "register" and "crops"
+    # belonged to a superseded layout and left empty dirs behind on every run
+    for d in ("concepts", "sources"):
         (W / d).mkdir(parents=True, exist_ok=True)
 
     backlinks = defaultdict(set)

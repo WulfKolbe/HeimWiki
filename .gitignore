@@ -1,10 +1,11 @@
 # Verbatim third-party source extractions — full text of copyrighted works.
 raw/
 
-# Derived, rebuildable
-build/tw/
-build/__pycache__/
-build/register.json
+# Derived, rebuildable — see out/314.txt for the command behind each
+build/tw/            # ./build/build.sh  (tiddlers + the TiddlyWiki working tree)
+build/__pycache__/   # any python3 run
+build/register.json  # python3 build/parse_register.py
+out/*.log            # scratch; the numbered reports in out/ ARE tracked
 
 # llmwiki workspace index — derived, rebuilt by `llmwiki init` / `reindex`
 .llmwiki/

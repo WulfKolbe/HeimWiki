@@ -1,0 +1,99 @@
+315 — deletions, after proving every command that rebuilds what went.
+
+================================================================================
+A. Proof first — each command re-run before anything was removed
+================================================================================
+
+  ./build/build.sh                        13 s      -> HeimWiki.html, build/tw/*
+  python3 build/pdfdrill2llmwiki.py …     <1 s      -> WDorg4: 0 written, 271 unchanged
+  gen_wiki.main()                         <1 s      -> 192 concept pages
+  python3 build/parse_register.py         <1 s      -> 192 entries, 189 bilingual
+  python3 build/verify.py                 3 s       -> 2222 pages, 46848/46848 maths, 0 broken
+
+Then, after deleting, the strongest of these was re-run from nothing:
+`./build/build.sh` rebuilt **48,523 tiddler files in 13 s** and verify.py
+returned the same numbers. The deletion is reversible by one command.
+
+================================================================================
+B. Removed
+================================================================================
+
+  path                     files    apparent B      allocated B   rebuilt by
+  build/tw/tiddlers/      48,523     6,136,145      201,797,632   ./build/build.sh
+  build/__pycache__/           3        63,207           73,728   any python3 run
+  build/register.json          1        80,685           81,920   python3 build/parse_register.py
+  wiki/register/               0             0            4,096   (nothing — empty residue)
+  wiki/crops/                  0             0            4,096   (nothing — empty residue)
+
+  TOTAL                   48,527     6,280,037      201,961,472
+
+  ~6.0 MB of content, ~193 MB of disk. The gap is 48,523 mostly one-line math
+  tiddlers each taking a 4 KB block.
+
+None of it was tracked by git (verified 0 tracked files per path before
+deleting), so the repository is unchanged in content by this removal.
+
+Folder is now 50 MB excluding .git, .llmwiki and raw/ — was 243 MB.
+
+================================================================================
+C. Deliberately NOT deleted, though list A called them regenerable
+================================================================================
+
+Section A of out/314.txt lists these as regenerable, and they are. They were
+kept because deleting them would empty the repository of the thing it exists to
+deliver, which is not what "clutter" means:
+
+  HeimWiki.html      12,058,986 B — the artefact a reader opens. Tracked. Without
+                     it the repository cannot be used without running a build.
+  wiki/**            2,222 pages — the wiki itself.
+  wiki/sources/**    the four source pages.
+
+Rebuilt, not removed: both were regenerated during the proof above and are
+current.
+
+================================================================================
+D. Unknown provenance — untouched, reported again as required
+================================================================================
+
+  build/tw/output/      23 MB, 237 files
+      Ad-hoc `tiddlywiki … --render` output from verification runs I typed by
+      hand. No committed command produces it. It is pure residue and nothing
+      reads it — but it is not reproducible from this repository, so it stays
+      until a command exists that makes it, or a decision is taken to drop it.
+
+  wiki/index.md         14,445 B
+      Written once by an inline heredoc that was never saved. gen_books'
+      chrome function writes an index for the SUPERSEDED register/passages
+      layout; running it would produce a wrong file, not this one.
+
+  wiki/overview.md       1,773 B
+      Written by gen_wiki.gen_chrome() for that same superseded layout, then
+      hand-edited.
+
+  build/gen_books.py
+      Runs, but its outputs (wiki/register/<bibkey>/, wiki/passages/<bibkey>/)
+      are no longer part of this wiki. Dead code, kept rather than dropped
+      silently.
+
+**The build still consumes wiki/index.md and wiki/overview.md, and no committed
+command can recreate them.** That remains the one real fragility. It is not
+fixed here because fixing it means writing a generator, which is a change, not a
+deletion.
+
+================================================================================
+E. .gitignore
+================================================================================
+
+Each generated path now carries the command that rebuilds it:
+
+  build/tw/            # ./build/build.sh
+  build/__pycache__/   # any python3 run
+  build/register.json  # python3 build/parse_register.py
+  out/*.log            # scratch; the numbered reports in out/ ARE tracked
+  raw/                 # pdfdrill output, third-party full text
+  .llmwiki/            # llmwiki init / reindex
+
+One source change was needed to stop the clutter recurring: `gen_wiki.main()`
+created `wiki/register/` and `wiki/crops/` on every run and filled neither, so
+the empty directories came back after each deletion. It now creates only the two
+it fills.
