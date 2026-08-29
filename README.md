@@ -12,27 +12,30 @@ work carries a *Begriffsregister* — the authors' index of terms — and a
 *Formelregister*. Those two registers are this wiki. Nothing here is a summary
 written for it, and no one has written up the argument of the volumes.
 
-All four volumes are in it:
+All four volumes are in it, completely — 2,222 pages:
 
-- **192 concept pages** (189 bilingual) — the Begriffsregister of volume 3,
-  pages 80–99. English body, German original beneath it. The `→`
-  cross-references of the printed register are live links; each page also lists
-  what refers back to it.
-- **314 formula pages** — every *numbered* equation in all four volumes, 662 in
-  total (vol. 1: 140, vol. 2: 182, vol. 3: 286, vol. 4: 54), as LaTeX, one page
-  per printed page.
-- **56 cited passages** — the pages of volume 2 that the Begriffsregister itself
-  cites, bilingual, so `(2, 21)` resolves to the text it names.
-- **4 source pages** — one per volume, with its extraction figures.
+| volume | document pages | equations | tables | figures | notes | references |
+|---|---|---|---|---|---|---|
+| 1 — Elementarstrukturen der Materie | 310 | 240 | 1 | 1 | 20 | 1 |
+| 2 — Elementarstrukturen der Materie | 379 | 344 | 3 | 1 | 30 | 1 |
+| 3 — Einführung, mit Registern | 100 | 324 | 0 | 0 | 6 | 0 |
+| 4 — Dröscher, Begleitband | 161 | 78 | 0 | 0 | 6 | 25 |
 
-568 pages in all. The *argument* of the volumes is still not written up: their
-prose is drilled, translated and searchable, but only the material above is in
-the wiki. `wiki/overview.md` says so on the page.
+Plus **192 concept pages** — the Begriffsregister of volume 3, one page per term,
+189 of them bilingual.
 
-**No scan images.** Every equation here is LaTeX. The crops were indexed as
-separate documents and flooded llmwiki's Recent view with jpgs whose paths
-resolved to no wiki page; each formula now carries its unit id instead, which
-locates the scan in the drill folder.
+This is not a selection. `pdfdrill` parses the whole document into a docmodel and
+projects it as `<bibkey>.tiddlers.json`; `build/pdfdrill2llmwiki.py` re-expresses
+that in llmwiki's dialect. Every page of prose is here, with its inline formulas
+set as `$…$`, its headings, and links out to every equation, table, figure, note
+and reference — each of which has a page of its own. Where a translation exists
+the German original sits beneath the English on the same page.
+
+**No scan images.** Every equation is LaTeX. 46,848 maths expressions, all of
+which compile.
+
+What is still missing is *synthesis*: concept pages for volumes 1, 2 and 4 the
+way volume 3 has them. That needs someone to read the volumes.
 
 ## Provenance
 

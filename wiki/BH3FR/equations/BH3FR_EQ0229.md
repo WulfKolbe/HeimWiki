@@ -1,0 +1,21 @@
+---
+title: "BH3FR_EQ0229"
+type: equation
+tags: [BH3FR, equation]
+sources: [BH3FR]
+page: 131
+refnum: "105"
+---
+# Equation 105
+
+$$
+\begin{aligned} & (2 \pi)^{5} \alpha \sqrt{1-\alpha^{2}}=9 \vartheta\left(1-A_{1} A_{2} Y_{3}\right), \quad\left(1+\sqrt{\eta_{1 k}}\right) A_{k}= \\ & =\left(1-\sqrt{\eta_{1 k}}\right) \sqrt{\eta_{1 k}}, \quad \alpha>0 \end{aligned}
+$$
+
+## Appears on
+
+page 131 (no prose on that page)
+
+## Source
+
+[Introduction, with index of terms and formulas](../../sources/BH3FR.md)

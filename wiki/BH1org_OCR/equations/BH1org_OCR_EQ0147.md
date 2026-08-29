@@ -1,0 +1,21 @@
+---
+title: "BH1org_OCR_EQ0147"
+type: equation
+tags: [BH1org_OCR, equation]
+sources: [BH1org_OCR]
+page: 175
+refnum: "M29a,"
+---
+# Equation M29a,
+
+$$
+\begin{aligned} & s p\left((\kappa)_{(+)}^{(1)}+(\kappa)_{(+)}^{(2)}\right) ; \underline{\bar{A}}=2 \operatorname{DIV}_{(x)} \overline{\underline{A}}, \quad s p\left((\kappa)_{(+)}^{(1)}-(\kappa)_{(+)}^{(2)}\right) ; \overline{\underline{A}}= \\ & \left.=\left.2 \underline{A} \underline{k}\right|_{s k} ^{s}\right]_{(k)-}^{(\kappa)} ; n, \quad \underline{\bar{A}}=p \bar{A}, \quad(\kappa)_{(+) k}^{(1,2)} ; \underline{\gamma^{i} \underline{k}}= \\ & =\frac{1}{\alpha_{k}} \partial_{k} \underline{\gamma}^{\underline{i} \underline{k}}-\left[\begin{array}{c} s \\ k \end{array}\right]_{(\kappa)-}^{(\kappa)} ; n \cdot \underline{\gamma}_{+}^{\underline{i} \underline{k}}, \quad \gamma_{i k}(\kappa)_{(+) l}^{(1,2)} ; \underline{\gamma^{i} \underline{k}}=(N-2)(\kappa)_{l} ; w, \\ & { }^{2} \underline{\bar{\gamma}}=w^{2} \bar{\gamma}, \quad W=\sqrt{|\gamma|}, \quad \gamma=\left|\gamma_{i k}\right|_{N}, \quad w=W ; n \end{aligned}
+$$
+
+## Appears on
+
+[page 175](../pages/p175.md)
+
+## Source
+
+[Elementary Structures of Matter, Volume 1](../../sources/BH1org_OCR.md)
