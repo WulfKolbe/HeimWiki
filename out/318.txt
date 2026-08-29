@@ -1,0 +1,102 @@
+318 — the reference build, run over the indexed pages.
+
+================================================================================
+A. Before and after
+================================================================================
+
+  document_references BEFORE : 0
+  document_references AFTER  : 3,973    distinct (source, target, 'links_to')
+
+  internal links parsed      : 4,460
+    resolve to a page        : 4,427   (99.3 %)
+    dangling                 :    33   ( 0.7 %)
+
+  build time: 0.1 s over 2,222 pages — ~17,000 pages/s. This is not an expensive
+  operation. It had simply never been run.
+
+Edges were produced with llmwiki's own parser (`mcp/tools/references.py`,
+`_parse_wiki_links`), executed directly rather than reimplemented, so the result
+is what llmwiki itself would have written.
+
+4,427 resolved links collapse to 3,973 distinct pairs because a page may link
+the same target more than once — most often its source page, cited once in the
+body and once in the footer.
+
+Most-linked pages, which is the shape you would expect of a document projection:
+
+  wiki/sources/bh2.md          <- 844 pages
+  wiki/sources/BH3FR.md        <- 623 pages
+  wiki/sources/BH1org_OCR.md   <- 574 pages
+
+1,446 of 2,222 pages have no inbound edge. Those are the element pages —
+equations, notes, figures — which link outward to their document page and source
+but are only linked back from prose that happens to transclude them.
+
+================================================================================
+B. The 33 dangling links are not broken pages — they are LaTeX
+================================================================================
+
+Every one is a false positive from mathematics. llmwiki's link pattern is
+
+    _WIKI_LINK_RE = re.compile(r"(?<!!)\[(?:[^\]]*)\]\(([^)]+)\)")
+
+and LaTeX produces `[...](...)` naturally:
+
+    wiki/bh2/equations/bh2_EQ0083.md   ->  bh2/equations/\mu \nu
+    wiki/bh2/equations/bh2_EQ0115.md   ->  bh2/equations/\kappa \lambda
+    wiki/BH1org_OCR/equations/…_EQ0145 ->  BH1org_OCR/equations/\kappa
+
+from source of the form `\left[\begin{array}{c}…\end{array}\right](\mu \nu)`.
+The parser has no math awareness, so a bracket group followed by a parenthesis
+group inside `$…$` reads as a link.
+
+This is worth naming because it is systematic on a mathematics corpus rather
+than random noise: 33 of 4,460 here, and it will scale with the amount of
+matrix and index notation in a document.
+
+My own `build/verify.py` reported **0** broken links over the same pages, which
+looked like agreement and was not: it requires the target to end in `.md`, so
+LaTeX never matches it. Two checkers, two different blind spots — llmwiki's
+sees maths as links, mine cannot see a link that lacks a suffix. Neither is
+wrong about the wiki; the pages are fine.
+
+================================================================================
+C. Can it run from indexing rather than as a separate step?
+================================================================================
+
+**Today it cannot, and that is why the table was empty.**
+
+`update_references` is called from exactly one place in the whole repository:
+
+    mcp/tools/write.py:387   await update_references(self.fs, self.kb_id, doc_id, content, dir_path)
+
+That is the MCP write path — `create`, `edit`, `append`. The guide's claim at
+`mcp/tools/guide.py:196`, "Every write automatically parses citations and
+cross-references and stores them as graph edges", is true of *that* path and
+only that path.
+
+Neither `api/domain/local_processor.py` nor `api/domain/watcher.py` calls it.
+So a file placed on disk by any other means — a projector, an editor, `cp`, git
+— is indexed as a document and gets **no edges at all**. The links render, the
+graph is empty, and nothing reports the gap.
+
+The hosted side has `POST /v1/knowledge-bases/{kb_id}/graph/rebuild`
+(`api/routes/graph.py`) with a five-minute per-KB cooldown and a lock, because
+a rebuild is O(all docs × all wiki pages). There is no local equivalent exposed.
+
+**It could run from indexing, and cheaply.** The indexer already holds exactly
+what the parser needs — `content`, `relative_path`, `document_id` — at the
+moment it writes the row. The measured cost here is 0.1 s for 2,222 pages;
+the hosted cooldown exists because the *hosted* rebuild recomputes the whole
+knowledge base, not because parsing links is expensive. Two shapes would work:
+
+1. **Per-document, in the indexer.** After a document is indexed, parse its
+   content and replace that document's outbound edges. Incremental, same cost
+   as the write path already pays, and it makes externally-written files behave
+   exactly like MCP-written ones.
+2. **A local rebuild command.** `llmwiki reindex` already walks every file;
+   having it rebuild edges at the end costs a tenth of a second at this scale.
+
+The distinction that matters: edges are currently a property of *how a page was
+written*, not of *what the page contains*. That is the defect. A page's links
+are in its content, so they should be derived wherever the content is read.
