@@ -1,0 +1,158 @@
+314 — HeimWiki/ inventory. Nothing deleted.
+
+Sizes are apparent bytes (du -sb). Where block allocation differs wildly from
+content size it is called out, because that is the difference that matters on
+disk.
+
+================================================================================
+A. REGENERABLE — a command in this repository rebuilds it, and it still runs
+================================================================================
+
+1. HeimWiki.html                          12,058,986 B        1 file
+   command: ./build/build.sh
+   confirmed: rebuilt today, 16.1 s. Chains prerender_math.cjs (KaTeX
+   validation), make_tiddlers.py, then `tiddlywiki build/tw --build index`.
+   TRACKED by git (the only generated artefact that is).
+
+2. build/tw/tiddlers/                      6,136,145 B   48,523 files
+   command: ./build/build.sh (stage: make_tiddlers.py)
+   confirmed: same run.
+   NOTE: 6.1 MB of content occupying 193 MB on disk — 48,523 files, almost all
+   one-expression math tiddlers, each taking a 4 KB block. This is the directory
+   that flooded the llmwiki index (48,110 of 50,339 documents).
+
+3. build/tw/tiddlywiki.info                    2,005 B        1 file
+   command: ./build/build.sh (first run: `tiddlywiki build/tw --init empty`,
+   then the plugin list is written in)
+   confirmed: same run.
+
+4. wiki/concepts/*.md                        173,803 B      192 files
+   command: python3 -c "import sys; sys.path.insert(0,'build'); import gen_wiki; gen_wiki.main()"
+   confirmed: re-ran it during this inventory; the 192 files came back
+   BYTE-IDENTICAL (md5 of the whole set unchanged). Reads BH3FR's docmodel via
+   build/parse_register.py.
+
+5. wiki/BH1org_OCR/  wiki/bh2/  wiki/BH3FR/  wiki/WDorg4/
+                                            5,279,753 B    2,024 files
+   command: python3 build/pdfdrill2llmwiki.py --doc ~/pdfdrill-library/<bibkey> \
+                --wiki wiki --title "<title>"
+   confirmed: re-ran all four today; writes only changed files, so a no-op run
+   reports "0 written, N unchanged".
+
+6. wiki/sources/*.md                           9,522 B        4 files
+   command: same as 5 (the projector writes each document's source page)
+   confirmed: same run.
+
+7. audit/verification.json                    53,729 B        1 file
+   command: python3 build/verify.py
+   confirmed: re-ran today.
+
+8. build/register.json                        80,685 B        1 file
+   command: python3 build/parse_register.py
+   confirmed: re-ran during this inventory — 192 entries, 189 bilingual.
+   UNTRACKED (already in .gitignore).
+
+9. build/__pycache__/                         63,207 B        3 files
+   command: any python3 run of the build scripts
+   UNTRACKED (already in .gitignore).
+
+10. wiki/register/  wiki/crops/                    0 B        0 files
+    Empty directories. `gen_wiki.main()` mkdirs "concepts, sources, register,
+    crops" unconditionally; register/ and crops/ are no longer filled by
+    anything. wiki/register/ was recreated by my own test run during this
+    inventory at 14:21. Harmless, but they are residue of a superseded layout.
+
+Regenerable subtotal: 23,857,835 B apparent (~217 MB allocated, dominated by
+build/tw/tiddlers).
+
+================================================================================
+B. SOURCE — nothing in this repository can rebuild it
+================================================================================
+
+Hand-written; losing any of these loses work that cannot be recovered from the
+repo.
+
+  README.md                     what the wiki is, its provenance and its rights
+                                position
+  .gitignore  .llmwikiignore    the exclusions; .llmwikiignore is what stops
+                                llmwiki indexing the build tree
+  build/build.sh                the 4-stage build
+  build/make_tiddlers.py        markdown -> .tid, link + image rewriting
+  build/prerender_math.cjs      math -> transcluded <$latex/> tiddlers
+  build/check_math.cjs          KaTeX gate over the wiki
+  build/validate_latex.cjs      batch KaTeX validator used by the generators
+  build/verify.py               the audit numbers
+  build/pdfdrill2llmwiki.py     the projector (the current CLI)
+  build/parse_register.py       Begriffsregister parser + DE/EN alignment
+  build/gen_wiki.py             concept-page generator
+  build/gen_books.py            SUPERSEDED — see section C
+  build/LICENSE                 MIT, scoped to build/
+  build/SKILL-pdfdrill-llmwiki.md   the skill
+  audit/README.md               review protocol
+  audit/PROVENANCE.md           who wrote which pages
+  audit/OPEN-QUESTIONS.md       self-reported defects
+  audit/replies/TEMPLATE.md     reviewer template
+  audit/reports/312-*.md
+  audit/reports/313-*.md        mirrors of reports committed in ~/llmwiki. That
+                                remote refuses this account (403), so THESE ARE
+                                THE ONLY PUBLISHED COPIES. Losing them loses the
+                                only readable version.
+
+  build/vendor/katex/           3,198,649 B, 170 files, TRACKED.
+                                Third-party (KaTeX 0.16.45, MIT, Khan Academy),
+                                copied from ~/llmwiki/web/node_modules/katex.
+                                No command in this repo reproduces it. It is
+                                deliberately vendored so the build runs offline
+                                and renders with the same KaTeX llmwiki uses.
+                                Treat as source: deleting it breaks the build
+                                and it can only be restored from outside.
+
+Outside the repo but inside the folder, both gitignored:
+
+  raw/                          verbatim source extractions. Regenerable only by
+                                pdfdrill, from PDFs not in this repo.
+  .llmwiki/                     199 MB. Rebuilt by `llmwiki init` / `reindex`,
+                                which is llmwiki's CLI, not this repo's.
+
+================================================================================
+C. UNKNOWN PROVENANCE — generated once, by something not in the repository
+================================================================================
+
+These are the honest gaps. Each exists, none can be reproduced from this
+repository as it stands.
+
+1. wiki/index.md                              14,445 B
+   Written by an inline heredoc I ran once at the shell. That script was never
+   saved. gen_books.gen_chrome() writes an index, but for the SUPERSEDED
+   register/passages layout — running it would produce a WRONG index, not this
+   one. There is no command here that reproduces this file.
+
+2. wiki/overview.md                            1,773 B
+   Written by gen_wiki.gen_chrome(), which also targets the superseded layout.
+   The file on disk was hand-edited afterwards. Re-running that function would
+   overwrite it with an obsolete description.
+
+3. build/tw/output/                       23,237,132 B      237 files
+   Rendered by ad-hoc `tiddlywiki … --render '[all[tiddlers]…]'` commands I
+   typed to verify builds. No script in the repo runs them. Pure verification
+   residue — nothing reads it — but it is not reproducible by any committed
+   command, so it does not belong in list A.
+
+4. build/gen_books.py                         (source file, listed in B)
+   Generates wiki/register/<bibkey>/ and wiki/passages/<bibkey>/, neither of
+   which exists any more — superseded by pdfdrill2llmwiki.py. The code runs, but
+   its output is not part of this wiki. Dead code, kept here rather than
+   silently dropped.
+
+================================================================================
+D. What a rebuild currently cannot restore
+================================================================================
+
+If everything in list A were deleted, `./build/build.sh` plus the four projector
+invocations plus gen_wiki.main() would restore all of it — EXCEPT that the build
+consumes wiki/index.md and wiki/overview.md, which are in list C. So the wiki
+would rebuild with those two pages exactly as they are on disk today, and if
+they were ever lost there is no command to recreate them.
+
+That is the one real fragility this inventory found, and it should be fixed by
+writing the index/overview generator into the repo before anything is deleted.
