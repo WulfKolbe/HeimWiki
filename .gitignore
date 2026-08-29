@@ -1,0 +1,7 @@
+# Verbatim third-party source extractions — full text of copyrighted works.
+raw/
+
+# Derived, rebuildable
+build/tw/
+build/__pycache__/
+build/register.json

@@ -1,0 +1,32 @@
+{
+  "generated_by": "build/verify.py",
+  "wiki": {
+    "markdown_pages": 236,
+    "pages_by_section": {
+      "root": 2,
+      "sources": 4,
+      "concepts": 192,
+      "register": 38
+    },
+    "crops": 261
+  },
+  "math": {
+    "expressions": 359,
+    "failed": 0,
+    "exit_code": 0
+  },
+  "links": {
+    "broken": []
+  },
+  "unreferenced_pages": [],
+  "built_artifact": {
+    "path": "HeimWiki.html",
+    "exists": true,
+    "bytes": 11564973
+  },
+  "not_published": {
+    "raw/": "verbatim third-party source extractions (copyrighted); gitignored",
+    ".llmwiki/": "derived search index",
+    "build/tw/": "TiddlyWiki working tree, rebuildable"
+  }
+}
